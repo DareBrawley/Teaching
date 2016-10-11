@@ -83,7 +83,93 @@ L.mapbox.accessToken = 'pk.eyJ1IjoiZGFyZXRlYWNoaW5nIiwiYSI6ImNpdTQ4OHAyMjBoNWwyb
 </body>
 </html>
 ```
+###An Example: Historical Map with Annontations
 
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>A simple map</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+<style>
+.leaflet-popup-content img {
+  max-width:200px;
+}
+</style>
+
+<div id='map'></div>
+
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoiZGFyZXRlYWNoaW5nIiwiYSI6ImNpdTQ4OHAyMjBoNWwyb2xwcTJpNW13bXQifQ.iJXS-wT_PuuszzbfY8ty3A';
+
+var map = L.mapbox.map('map','mapbox.light,dareteaching.91bd8da2');
+
+//these are our annotations
+var geoJson = [
+  {
+  type: 'Feature', 
+  geometry: { 
+    type: "Point", 
+    coordinates: [ 72.834766783363435, 18.941302655942383 ]
+  },
+  properties: { 
+    'marker-color': '#05E',
+    'marker-size': 'small',
+    'marker-symbol': 'circle',
+    name: "Chhatrapati Shivaji Terminus", 
+    about: "This is a description of this important train station  . . .", 
+    url: "https://upload.wikimedia.org/wikipedia/commons/c/c5/Chhatrapati_Shivaji_Terminus_(Victoria_Terminus).jpg"
+    } 
+  }, { 
+    type: 'Feature', 
+    geometry: { "type": "Point", "coordinates": [ 72.842038084801572, 18.951785322265913 ]},
+    properties: { 
+      'marker-color': '#05E',
+      'marker-size': 'small',
+      'marker-symbol': 'circle',
+      name: "Victoria Dock", 
+      about: "This is a description of this port", 
+      url: "https://upload.wikimedia.org/wikipedia/commons/0/07/The_Victoria_Dock.jpg"
+    }
+}];
+
+var myLayer = L.mapbox.featureLayer().addTo(map);
+
+// Add the iframe in a custom popup using the custom feature properties
+myLayer.on('layeradd', function(e) {
+    var marker = e.layer,
+        feature = marker.feature;
+
+    // Create custom popup content
+    var popupContent =  '<a target="_blank" class="popup" >' + '<img src="' +
+        feature.properties.url + '"/>'
+        + feature.properties.name + '</a>';
+
+    // http://leafletjs.com/reference.html#popup
+    marker.bindPopup(popupContent,{
+        closeButton: true,
+        minWidth: 320
+    });
+});
+
+// Add features to the map
+myLayer.setGeoJSON(geoJson);
+
+map.setView([18.95, 72.81], 14);
+
+</script>
+</body>
+</html>
+```
 
 
 
