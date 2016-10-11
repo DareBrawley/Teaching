@@ -15,8 +15,7 @@ In broad strokes the process of using MapBox for this kind of assignment involve
  2.  Upload datasets to MapBox
  3.  Design map (including the symbology of the layers) and combine the different layers using HTML. 
 
-For additional 
-This tutorial goes through one basic example that should set you up with what you'll need to know to build your own map. If you are interested in adding features not covered here these guides published by MapBox are an incredible resource, and will teach you all you need to know to create lots of different types of maps. 
+For additional guidannce on using MapBox beyond the tools covered in this tutorial please refer to these [examples published by MapBox.](https://www.mapbox.com/mapbox.js/example/v1.0.0/) 
 
 ###Step One: Prepare files
 Create or compile any layers you hope to include in your map in QGIS. This includes georectifying any historical maps you hope to use, and creating any vector data sets (i.e. points, lines, or polygons) that you want to use to annotate your map, and/or cleaning any datasets you have downloaded from other sources.
@@ -40,10 +39,57 @@ Next we will upload these layers to MapBox.
 	* Browse for and then select the raster file you want to upload. It will need to be a GeoTiff (i.e. you need to have already georectified it in QGIS and saved that file as a .tif)
 	* It can sometimes take a little while for these large files to be processed and uploaded via MapBox. It will keep processing even as we move on to the next steps. 
 
-*Next we will upload the vector data sets that we will use to annotate our historical map. 
-	* Select the `datasets` tab. 
-	* Select `New Datset`, and then `Upload`
-	* Navigate to the vector dataset you want to upload
+###An Example: Historical Map
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset=utf-8 />
+<title>A simple map</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+<script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+<style>
+  body { margin:0; padding:0; }
+  #map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+<style>
+.leaflet-popup-content img {
+	max-width:200px;
+}
+</style>
+
+<div id='map'></div>
+
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoiZGFyZXRlYWNoaW5nIiwiYSI6ImNpdTQ4OHAyMjBoNWwyb2xwcTJpNW13bXQifQ.iJXS-wT_PuuszzbfY8ty3A';
+  var map = L.mapbox.map('map', null, {
+      maxZoom: 18
+  }).setView([18.95, 72.81], 14);
+
+  var layers = {
+     Historical: L.mapbox.tileLayer('mapbox.light,dareteaching.91bd8da2'), //this adds the historical map on top of a basemap of contemporary streets (in the mapbox.light style) 
+     Streets: L.mapbox.tileLayer('mapbox.light'),
+     Satellite: L.mapbox.tileLayer('mapbox.satellite')
+  };
+
+  layers.Historical.addTo(map);
+  L.control.layers(layers).addTo(map);
+
+</script>
+</body>
+</html>
+```
 
 
+
+
+###Additional Resources and Examples
+* Embedding a Sound Cloud clip in a point on your map. [Link](https://www.mapbox.com/mapbox.js/example/v1.0.0/soundcloud-embed/)
+* MapBox.js examples. [Link](https://www.mapbox.com/mapbox.js/example/v1.0.0/)
+* MapBox.js documentation. [Link](https://www.mapbox.com/mapbox.js/api/v2.4.0/)
+* Custom Marker Tooltips. [Link](https://www.mapbox.com/mapbox.js/example/v1.0.0/custom-marker-tooltip/)
 
