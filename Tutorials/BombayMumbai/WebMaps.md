@@ -25,7 +25,7 @@ In this example we will work with two datasets:
 ###Step Two: Upload datasets to MapBox
 MapBox only accepts certain formats of data -- just like QGIS requires specific file formats like the shapefile -- thus we first need to export our new point layer as a GeoJSON file. 
 * right click the layer name in the layers menu and select `save as`. Then in the format down menu select `GeoJSON`. Name your layer and save it. **Import Note**: when you are creating new annotation layers make sure that the projection system is `EPSG:4326, WGS:84`. 
-![img](https://github.com/DareBrawley/Teaching/tree/master/Tutorials/BombayMumbai/Images/GeoJSON.png)
+![img](https://github.com/DareBrawley/Teaching/blob/master/Tutorials/BombayMumbai/Images/GEOjson.png)
 * once you have saved your GeoJSON file open it with sublime text. It will look like this: 
 ![img](https://github.com/DareBrawley/Teaching/tree/master/Tutorials/BombayMumbai/Images/GeoJSON-file.png)
 
