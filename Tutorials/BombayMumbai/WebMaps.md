@@ -65,14 +65,16 @@ This page gives to helpful examples you can modify to create your map but there 
 </head>
 <!-- the body of the page is where we now create our map-->
 <body>
+
 <!--here we set up the style we will later use for the popups of our annotations-->  
 <style>
 .leaflet-popup-content img {
-  max-width:200px;
+  max-width:380px;
 }
 .leaflet-popup-content p {
-  font-size: 10
-  fo
+  font-size: 10;
+  font-family: sans-serif;
+  color: 
 }
 </style>
 
@@ -86,8 +88,9 @@ L.mapbox.accessToken = 'pk.eyJ1IjoiZGFyZXRlYWNoaW5nIiwiYSI6ImNpdTQ4OHAyMjBoNWwyb
 //In this case the content of the map is the historical map we have uploaded (Map ID: 'dareteaching.91bd8da2') on top of a tileset provided by map box('mapbox.light')
 var map = L.mapbox.map('map','mapbox.light,dareteaching.91bd8da2');
 
-//these are our annotations. Mapbox requires specific file types in order to read data (like how QGIS requires a shapefile). GeoJSONs are a spatial data type like the shape file. they store 'properties' (i.e. attributes) and 'geometry' (i.e. spatial coordinates)
-var annotation_data = [ //this line defines the name of the variable where we will store our point data for annotations
+//these are our annotations. Mapbox requires specific file types in order to read data (like how QGIS requires a shapefile). GeoJSONs are a spatial data type like the shapefile. they store 'properties' (i.e. attributes) and 'geometry' (i.e. spatial coordinates)
+//this line defines the name of the variable where we will store our point data for annotations
+var annotation_data = [ 
   {
   type: 'Feature', 
   geometry: { 
@@ -127,14 +130,14 @@ myLayer.on('layeradd', function(e) {
         feature = marker.feature;
 
     // Create custom popup content, separate html tags enclosed in single quotes with the names of properties from your geoJSON file
-    var popupContent =  '<a target="_blank" class="popup" >' + 
-    '<img src="' + feature.properties.url + '"/>' + 
-    '<p>' feature.properties.name '</p>'+ '</a>';
+    var popupContent =   '<img src="' +
+        feature.properties.url + '"/>' + '<h2>'
+        + feature.properties.name + '</h2>' + '<p>' + feature.properties.about + '<p>';
 
     // http://leafletjs.com/reference.html#popup
     marker.bindPopup(popupContent,{
         closeButton: true,
-        minWidth: 320
+        minWidth: 400
     });
 });
 
